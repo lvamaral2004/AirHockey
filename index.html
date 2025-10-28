@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Air Hockey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="left">
+      <canvas id="field" width="720" height="880"></canvas>
+    </div>
+    <div class="controls">
+      <div class="panel">
+        <label><strong>Controles do Cliente</strong></label>
+        <div style="height:10px"></div>
+        <button id="tacar">TACAR (cliente)</button>
+        <div class="status" id="state">Estado: DISCONNECTED</div>
+        <div style="height:10px"></div>
+        <label>Janela</label>
+        <div id="windowText">cwnd: 1 | ssthresh: 8 | inflight: 0</div>
+        <div style="height:12px"></div>
+        <label>Taxa de perda</label>
+        <select id="lossSel">
+          <option value="0.02">2% (padrão)</option>
+          <option value="0.10">10%</option>
+          <option value="0.0">0%</option>
+        </select>
+      </div>
+      <div class="panel" style="margin-top:12px">
+        <label><strong>Eventos</strong></label>
+        <div id="log" class="log"></div>
+      </div>
+    </div>
+  </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
