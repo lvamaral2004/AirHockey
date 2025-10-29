@@ -1,42 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Air Hockey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air HockeyP</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="left">
-      <canvas id="field" width="720" height="880"></canvas>
+    <div class="container">
+        <div class="game-area">
+            <div class="table">
+                <div class="center-line"></div>
+                <div class="center-circle" id="center-circle"></div>
+                <div class="goal goal-left"></div>
+                <div class="goal goal-right"></div>
+                <div class="paddle paddle-left" id="client-paddle"></div>
+                <div class="paddle paddle-right" id="server-paddle"></div>
+                <div id="pucks-container"></div>
+                <div class="client-label">CLIENTE</div>
+                <div class="server-label">SERVIDOR</div>
+                <div class="buffer-area" id="buffer-area" style="display: none;">
+                    Buffer de Reordenamento: <span id="buffer-sequence">-</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="hit-button">REBATER</button>
+                <button id="reset-button" class="reset-button" style="display: none;">RESETAR ETAPA</button>
+                <button id="slow-start-button" class="slow-start-button" style="display: none;">SLOW START</button>
+            </div>
+        </div>
+        <div class="info-panel">
+            <div class="stage-info">
+                <h2 id="stage-title">Etapa 1: Preparação</h2>
+                <p id="stage-description">O servidor está se preparando para aceitar conexões.</p>
+                <div class="sequence-info" id="sequence-info" style="display: none;">
+                    <div>Sequência Esperada: <span id="expected-sequence">1, 2, 3, 4</span></div>
+                    <div>Pacotes Confirmados: <span id="confirmed-count">0/4</span></div>
+                    <div class="sequence-display" id="sequence-display">
+                        <div class="sequence-number">1</div>
+                        <div class="sequence-number">2</div>
+                        <div class="sequence-number">3</div>
+                        <div class="sequence-number">4</div>
+                    </div>
+                </div>
+                <div class="window-control" id="window-control" style="display: none;">
+                    <h3>Janela Deslizante (Buffer)</h3>
+                    <div class="window-bar">
+                        <div class="window-fill" id="window-fill"></div>
+                    </div>
+                    <div class="window-info">
+                        <span>Espaço Livre: <span id="free-space">100%</span></span>
+                        <span id="congestion-indicator">Estado: Normal</span>
+                    </div>
+                    <div style="margin-top:10px; font-size:12px;">
+                        Pacotes na Janela: <span id="packets-in-window">0/10</span>
+                    </div>
+                </div>
+            </div>
+            <div class="status-log">
+                <h3>STATUS</h3>
+                <div id="log-container"></div>
+            </div>
+            <div class="socket-state">
+                <h3>Estado do Socket</h3>
+                <div class="socket-state-value" id="socket-state">BOUND</div>
+            </div>
+        </div>
     </div>
-    <div class="controls">
-      <div class="panel">
-        <label><strong>Controles do Cliente</strong></label>
-        <div style="height:10px"></div>
-        <button id="tacar">TACAR (cliente)</button>
-        <div class="status" id="state">Estado: DISCONNECTED</div>
-        <div style="height:10px"></div>
-        <label>Janela</label>
-        <div id="windowText">cwnd: 1 | ssthresh: 8 | inflight: 0</div>
-        <div style="height:12px"></div>
-        <label>Taxa de perda</label>
-        <select id="lossSel">
-          <option value="0.02">2% (padrão)</option>
-          <option value="0.10">10%</option>
-          <option value="0.0">0%</option>
-        </select>
-      </div>
-      <div class="panel" style="margin-top:12px">
-        <label><strong>Eventos</strong></label>
-        <div id="log" class="log"></div>
-      </div>
-    </div>
-  </div>
     <script src="script.js"></script>
 </body>
-
 </html>
