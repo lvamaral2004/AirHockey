@@ -229,8 +229,8 @@ function startStage1() {
     currentStage = 1;
     stageTitle.textContent = "Etapa 1: Preparação";
     stageDescription.textContent = "O servidor está se preparando para aceitar conexões.";
-    updateSocketState("BOUND");
     addLogEntry("ETAPA 1 INICIADA");
+    updateSocketState("CLOSED");
     
     // Controlar visibilidade do puck central
     toggleMainPuck();
@@ -241,18 +241,22 @@ function startStage1() {
     windowControl.style.display = 'none';
     hideResetButton();
     hideSlowStartButton();
-    
+
+setTimeout(() => {
+    updateSocketState("BOUND");
     addLogEntry("Operação BIND: o servidor associou o socket a porta 80 e ao IP 192.168.0.1");
+    // O seu delay de 3s para o LISTEN começa aqui
     setTimeout(() => {
         updateSocketState("LISTEN");
         addLogEntry("Operação LISTEN: o servidor está na escuta e aguarda conexões de entrada");
+        // O seu delay de 3s para o REBATER começa aqui
         setTimeout(() => {
             addLogEntry("Cliente quer se conectar? Se sim aperte o botão 'REBATER'");
             hitButton.disabled = false;
-            updateSocketState("CLOSED");
             showResetButton();
         }, 3000);
     }, 3000);
+}, 3000);
 }
 
 function startStage2() {
