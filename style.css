@@ -186,7 +186,7 @@ button:disabled {
 .stage-info h2 {
   font-size: 24px;
   margin-bottom: 10px;
-  color: #0136aa;
+  color: #0956c9;
 }
 
 .status-log {
@@ -199,7 +199,7 @@ button:disabled {
 }
 
 .status-log h3 {
-  color: #0136aa;
+  color: #0956c9;
   margin-bottom: 10px;
 }
 
@@ -226,7 +226,7 @@ button:disabled {
 .socket-state-value {
   font-size: 18px;
   font-weight: bold;
-  color: #12a01e;
+  color: #009926;
 }
 
 .client-label,
