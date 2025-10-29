@@ -115,6 +115,17 @@ function updateWindowDisplay() {
     }
 }
 
+function toggleMainPuck() {
+    const mainPuck = document.getElementById('main-puck');
+    if (currentStage === 4 || currentStage === 5) {
+        // Esconder o puck central nas etapas 4 e 5
+        mainPuck.style.display = 'none';
+    } else {
+        // Mostrar o puck central nas etapas 1-3
+        mainPuck.style.display = 'block';
+    }
+}
+
 function resetStage() {
     // Parar todas as animações
     if (puckAnimation) {
@@ -162,8 +173,11 @@ function resetStage() {
     clientPaddle.style.top = `${clientPaddleY}px`;
     clientPaddle.style.left = `30px`;
     serverPaddle.style.top = `${serverPaddleY}px`;
-    puck.style.left = `${puckPositionX}px`;
-    puck.style.top = `${puckPositionY}px`;
+    
+    // Resetar puck central
+    const mainPuck = document.getElementById('main-puck');
+    mainPuck.style.left = `${puckPositionX}px`;
+    mainPuck.style.top = `${puckPositionY}px`;
 
     // Limpar pacotes
     packets = [];
@@ -180,6 +194,9 @@ function resetStage() {
 
     // Atualizar display da janela
     updateWindowDisplay();
+
+    // Controlar visibilidade do puck central
+    toggleMainPuck();
 
     // Re-iniciar a etapa atual
     hitButton.disabled = false;
@@ -213,6 +230,10 @@ function startStage1() {
     stageTitle.textContent = "Etapa 1: Preparação";
     stageDescription.textContent = "O servidor está se preparando para aceitar conexões.";
     updateSocketState("BOUND");
+    addLogEntry("ETAPA 1 INICIADA");
+    
+    // Controlar visibilidade do puck central
+    toggleMainPuck();
     
     // Esconder elementos das etapas posteriores
     sequenceInfo.style.display = 'none';
@@ -239,6 +260,10 @@ function startStage2() {
     stageTitle.textContent = "Etapa 2: Endereçamento";
     stageDescription.textContent = "O cliente está configurando seu endereço para conectar ao servidor.";
     hitButton.disabled = true;
+    addLogEntry("ETAPA 2 INICIADA");
+
+    // Controlar visibilidade do puck central
+    toggleMainPuck();
     
     // Esconder elementos das etapas posteriores
     sequenceInfo.style.display = 'none';
@@ -260,6 +285,10 @@ function startStage3() {
     stageTitle.textContent = "Etapa 3: Handshake";
     stageDescription.textContent = "Estabelecendo conexão através do three-way handshake.";
     hitButton.disabled = true;
+    addLogEntry("ETAPA 3 INICIADA");
+
+    // Controlar visibilidade do puck central
+    toggleMainPuck();
     
     // Esconder elementos das etapas posteriores
     sequenceInfo.style.display = 'none';
@@ -280,6 +309,10 @@ function startStage4() {
     stageTitle.textContent = "Etapa 4: Confiabilidade";
     stageDescription.textContent = "Garantindo entrega ordenada e confiável dos pacotes.";
     updateSocketState("ESTABLISHED");
+    addLogEntry("ETAPA 4 INICIADA");
+
+    // Controlar visibilidade do puck central - ESCODER nas etapas 4 e 5
+    toggleMainPuck();
     
     // Mostrar elementos da etapa 4
     sequenceInfo.style.display = 'block';
@@ -306,6 +339,10 @@ function startStage5() {
     stageTitle.textContent = "Etapa 5: Controle de Fluxo";
     stageDescription.textContent = "Gerenciando congestionamento com Janela Deslizante.";
     updateSocketState("ESTABLISHED");
+    addLogEntry("ETAPA 5 INICIADA");
+    
+    // Controlar visibilidade do puck central - ESCODER nas etapas 4 e 5
+    toggleMainPuck();
     
     // Mostrar elementos da etapa 5
     sequenceInfo.style.display = 'none';
@@ -442,7 +479,8 @@ function stopPuckAtClient() {
     
     // Posicionar a bola perto do rebatedor do cliente
     puckPositionX = 80;
-    puck.style.left = `${puckPositionX}px`;
+    const mainPuck = document.getElementById('main-puck');
+    mainPuck.style.left = `${puckPositionX}px`;
     puckVelocityX = 0;
     puckVelocityY = 0;
     
@@ -470,8 +508,9 @@ function animatePuck() {
             return;
         }
 
-        puck.style.left = `${puckPositionX}px`;
-        puck.style.top = `${puckPositionY}px`;
+        const mainPuck = document.getElementById('main-puck');
+        mainPuck.style.left = `${puckPositionX}px`;
+        mainPuck.style.top = `${puckPositionY}px`;
 
         puckAnimation = requestAnimationFrame(movePuck);
     }
@@ -863,8 +902,9 @@ function resetPuckToCenter() {
     puckPositionY = 250;
     puckVelocityX = 0;
     puckVelocityY = 0;
-    puck.style.left = `${puckPositionX}px`;
-    puck.style.top = `${puckPositionY}px`;
+    const mainPuck = document.getElementById('main-puck');
+    mainPuck.style.left = `${puckPositionX}px`;
+    mainPuck.style.top = `${puckPositionY}px`;
 }
 
 // Controle do servidor com mouse (etapas 4 e 5)
